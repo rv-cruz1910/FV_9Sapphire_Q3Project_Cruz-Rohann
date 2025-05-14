@@ -12,10 +12,7 @@
             <a class="navbar-brand" href="javascript:location.reload();">
                 <img src="https://i.redd.it/frm5m4wsadrd1.jpeg" id="LOGO" alt="MRT Logo">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#Home">Home</a>
@@ -74,6 +71,7 @@
                 <div class="mb-3">
                     <label for="toStation" class="form-label">To Station</label>
                     <select class="form-control" id="toStation">
+                        <option value="0">Select Station</option>
                         <option value="0">North Avenue</option>
                         <option value="0">Quezon Avenue</option>
                         <option value="0">GMA Kamuning</option>
@@ -89,13 +87,16 @@
                         <option value="15">Taft Avenue</option>
                     </select>
                 </div>
+
                 <button type="button" class="btn btn-primary" onclick="showpricing()">Regular Fare</button>
                 <button type="button" class="btn btn-primary" onclick="showmdiscount()">Discounted Fare</button>
             </form>
-            <br><br>
-            <p>Fare amount:</p>
-            <input type="text" class="fare-box" id="fareAmount" readonly>
         </section>
+
+        <br><br>
+        <p>Fare amount:</p>
+        <input type="text" class="fare-box" id="fareAmount" readonly>
+        <br><br>
 
         <section id="Schedule" class="mt-5">
             <h2>Train Schedule</h2>
@@ -178,12 +179,13 @@
         }
 
         .container {
+            background-color: #000000;
             font-family: 'Cursive', sans-serif;
             font-size: 19px;
-            background-color: #000000;
-            color: #A5B9CC;
             padding: 10px;
-            margin: 10px auto;
+            margin: 10px 0;
+            width: 100%;
+            text-align: center;
             border-radius: 10px;
         }
 
@@ -199,14 +201,19 @@
 
         h1 {
             background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoOT1UQYcijL9Ivg9x3brkItKjlDOLr9p0xw&s");
+            background-repeat: repeat;
             color: #900020;
             padding: 10px;
-            border-radius: 10px;
             background-size: cover;
+            border-radius: 10px;
         }
 
         h2 {
             color: #8B0000;
+        }
+
+        label, p, li {
+            color: #A5B9CC;
         }
 
         .fare-box {
@@ -220,19 +227,22 @@
 
     <script>
         function showpricing() {
-            let location = parseInt(document.getElementById("fromStation").value);
-            let destination = parseInt(document.getElementById("toStation").value);
-            let baseFare = 13;
-            let finalFare = Math.abs(location - destination) + baseFare;
+            var location = parseInt(document.getElementById("fromStation").value);
+            var destination = parseInt(document.getElementById("toStation").value);
+            var baseFare = 13;
+            var difference = Math.abs(location - destination);
+            var finalFare = difference + baseFare;
             document.getElementById("fareAmount").value = "₱" + finalFare.toFixed(2);
         }
 
         function showmdiscount() {
-            let location = parseInt(document.getElementById("fromStation").value);
-            let destination = parseInt(document.getElementById("toStation").value);
-            let baseFare = 13;
-            let finalFare = Math.abs(location - destination) + baseFare;
-            let discountedFare = finalFare * 0.8;
+            var location = parseInt(document.getElementById("fromStation").value);
+            var destination = parseInt(document.getElementById("toStation").value);
+            var baseFare = 13;
+            var discount = 0.20;
+            var difference = Math.abs(location - destination);
+            var finalFare = difference + baseFare;
+            var discountedFare = finalFare * (1 - discount);
             document.getElementById("fareAmount").value = "₱" + discountedFare.toFixed(2);
         }
     </script>
@@ -240,3 +250,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
